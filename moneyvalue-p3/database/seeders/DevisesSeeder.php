@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+// use App\Models\Devises;
 use Illuminate\Database\Seeder;
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DevisesSeeder extends Seeder
 {
@@ -12,7 +13,6 @@ class DevisesSeeder extends Seeder
      */
     public function run(): void
     {
-        //
-        Devises::factory->count(3)->hasPaires(1)->create();
+        \App\Models\Devises::factory()->count(3)->create();
     }
 }

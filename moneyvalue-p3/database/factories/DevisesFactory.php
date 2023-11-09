@@ -2,11 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Devises; // Assurez-vous d'importer le modèle correctement
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\devises>
- */
 class DevisesFactory extends Factory
 {
     /**
@@ -16,23 +14,13 @@ class DevisesFactory extends Factory
      */
     public function definition(): array
     {
-
-        $code = $this->faker->RandomElement(['EUR', 'USD', 'BTC']);
-
-        if ($code == 'EUR'){
-            $name = 'Euro';
-        }
-        else if ($code == 'USD') {
-            $name = 'Dollar';
-        }
-        else {
-            $name = 'Bitcoin';
-        }
+        $code = (['EUR', 'USD', 'BTC']); // Utilisez randomElement pour choisir une devise aléatoir
 
         return [
-            //
-            'code'=> $code,
+            'code' => $code,
             'name'=> $name
         ];
+
+
     }
 }

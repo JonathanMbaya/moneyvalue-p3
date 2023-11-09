@@ -2,11 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Paire; // Assurez-vous d'importer le modèle correctement
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\paire>
- */
 class PaireFactory extends Factory
 {
     /**
@@ -16,20 +14,11 @@ class PaireFactory extends Factory
      */
     public function definition(): array
     {
-        $table->id();
-        $table->string('source_currency')->foreign_key('code');
-        $table->string('target_currency')->foreign_key('code');
-        $table->decimal('rate');
-        $table->timestamps('updatedAt');
-        $table->integer('number_of_requests');
-
         return [
-            //
-            'source_currency' => $this -> foreign_key('code'),
-            'target_currency' => $this -> foreign_key('code'),
-            'rate' => $this -> faker -> randomFloat($min= 0 , $max = 10),
-            'updatedAt' => $this -> faker -> dateTimeThisDecade(),
-            'integer' => $this -> faker -> numberBetween($min = 50, $max = 200)
+            'source_currency' => foreign_key('code'), // Utilisez randomElement pour choisir une devise aléatoire
+            'target_currency' => foreign_key('code'),
+            'rate' => $this->faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 10), // Utilisez randomFloat pour un nombre à virgule flottante
+            'number_of_requests' => $this->faker->numberBetween($min = 50, $max = 200)
         ];
     }
 }

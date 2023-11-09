@@ -3,7 +3,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateDevisesTable extends Migration
+
 {
     /**
      * Run the migrations.
@@ -11,9 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('devises', function (Blueprint $table) {
-            $table->id('code_id');
-            $table->string('code');
+            $table->engine = 'InnoDB';
+            $table->string('code')->primary();
             $table->string('name');
+            $table->timestamps();
         });
     }
 
