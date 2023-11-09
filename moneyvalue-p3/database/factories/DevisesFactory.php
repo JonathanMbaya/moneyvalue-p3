@@ -14,7 +14,8 @@ class DevisesFactory extends Factory
      */
     public function definition(): array
     {
-        $code = (['EUR', 'USD', 'BTC']); // Utilisez randomElement pour choisir une devise aléatoir
+        $code = $this->faker-> randomElement(['EUR', 'USD', 'BTC']); // Utilisez randomElement pour choisir une devise aléatoir
+        $name = "Euro";
 
         return [
             'code' => $code,
