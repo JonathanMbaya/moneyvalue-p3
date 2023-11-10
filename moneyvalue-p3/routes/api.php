@@ -6,6 +6,11 @@ use App\Http\Controllers\DevisesController;
 
 Route::get('/devises',[DevisesController::class, 'index']);
 
+Route::post('/devises/add',[DevisesController::class, 'add']);
 
-Route::post('/addDevises',[DevisesController::class, 'add']);
+Route::put('/devises/edit/{id}',[DevisesController::class, 'edit']);
+
+Route::delete('/devises/delete/{id}',[DevisesController::class, 'delete']);
+
+
 

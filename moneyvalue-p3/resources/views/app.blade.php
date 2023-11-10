@@ -11,8 +11,10 @@
 <body>
 
     <div id="app">
-        <devises-list/>
+        <login/>
         @yield('content')
+
+
     </div>
 
 

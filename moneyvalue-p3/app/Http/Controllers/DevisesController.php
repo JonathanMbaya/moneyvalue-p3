@@ -27,8 +27,8 @@ class DevisesController extends Controller
         $validator = Validator::make($request->all(), [
             'code' => 'required|string',
             'name' => 'required|string',
-            'created_at' => 'required',
-            'updated_at' => 'required'
+            'created_at' => 'date',
+            'updated_at' => 'date'
         ]);
 
         if ($validator->fails()) {
@@ -38,6 +38,7 @@ class DevisesController extends Controller
             ], 422);
         } else {
             $devises = new Devises;
+            $devises->id = $request->id;
             $devises->code = $request->code;
             $devises->name = $request->name;
             $devises->created_at = $request->created_at;
@@ -59,43 +60,62 @@ class DevisesController extends Controller
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    // public function store(StoredevisesRequest $request)
-    // {
-    //     //
-    // }
+    public function edit(Request $request, $id)
+    {
+    $validator = Validator::make($request->all(), [
+        'code' => 'required|string',
+        'name' => 'required|string',
+        'updated_at' => 'date'
+    ]);
 
-    /**
-     * Display the specified resource.
-     */
-    // public function show(devises $devises)
-    // {
-    //     //
-    // }
+    if ($validator->fails()) {
+        return response()->json([
+            'status' => 422,
+            'error' => $validator->messages()
+        ], 422);
+    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    // public function edit(devises $devises)
-    // {
-    //     //
-    // }
+    $devises = Devises::find($id);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    // public function update(UpdatedevisesRequest $request, devises $devises)
-    // {
-    //     //
-    // }
+    if (!$devises) {
+        return response()->json([
+            'status' => 404,
+            'message' => 'Devise not found!'
+        ], 404);
+    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    // public function destroy(devises $devises)
-    // {
-    //     //
-    // }
+    $devises->code = $request->code;
+    $devises->name = $request->name;
+    $devises->updated_at = $request->updated_at;
+
+    $devises->save();
+
+    if ($devises) {
+        return response()->json([
+            'status' => 200,
+            'message' => 'Devise has been updated successfully!',
+            'data' => $devises
+        ], 200);
+    } else {
+        return response()->json([
+            'status' => 500,
+            'message' => 'Something went wrong!'
+        ], 500);
+    }
+    }
+
+    public function delete($id){
+        $devises = Devises::find($id);
+
+        $devises->delete();
+
+        $data = [
+            'status' => 200,
+            'message' => "Data deleted successfully"
+        ];
+
+        return response() ->json($data,200);
+    }
+
+
 }

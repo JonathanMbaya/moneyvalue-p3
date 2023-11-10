@@ -13,7 +13,8 @@ class CreateDevisesTable extends Migration
     {
         Schema::create('devises', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->string('code')->primary();
+            $table->bigInteger('id')->autoIncrement();
+            $table->string('code');
             $table->string('name');
             $table->timestamps();
         });
