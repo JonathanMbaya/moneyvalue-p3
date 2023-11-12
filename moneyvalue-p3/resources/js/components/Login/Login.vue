@@ -1,46 +1,54 @@
 <template>
 
+<header>
 
-    <header>
+<div class="login">
 
-      <div class="login">
+    <h1>Connexion</h1>
 
-        <h1>Connexion</h1>
+    <form  @submit.prevent="onSubmit"  @blur="v$.touch">
+        <input type="text" name="email" placeholder="e-mail" v-model="email" @blur="v$.touch" required="required" />
+        <p v-if="v$.email.error">{{ v$.email.$errors[0].$message }}</p>
+        <input type="password" name="password" placeholder="Password" v-model="password" required="required" />
+        <p v-if="v$.password.error">{{ v$.password.$errors[0].$message }}</p>
+        <button type="submit" name="login" class="btn btn-primary btn-block btn-large" >Let me in.</button>
+        <p v-if="v$.login.error">{{ v$.login.$errors[0].$message }}</p>
+    </form>
 
-        <form  @submit.prevent="onSubmit"  @blur="v$.touch">
-          <input type="text" name="email" placeholder="e-mail" v-model="email" @blur="v$.touch" required="required" />
-          <p v-if="v$.email.error">{{ v$.email.$errors[0].$message }}</p>
-          <input type="password" name="password" placeholder="Password" v-model="password" required="required" />
-          <p v-if="v$.password.error">{{ v$.password.$errors[0].$message }}</p>
-          <button type="submit" name="login" class="btn btn-primary btn-block btn-large" >Let me in.</button>
-          <p v-if="v$.login.error">{{ v$.login.$errors[0].$message }}</p>
-        </form>
-
+    <div>
+        <p>Vous n'avez pas de compte ? <router-link to="signup">S'inscrire</router-link></p>
     </div>
 
+</div>
+
+</header>
 
 
-    </header>
 
-
-
-    </template>
+</template>
 
 
     <script>
 
     import { useVuelidate } from '@vuelidate/core'
     import { required, email } from '@vuelidate/validators'
+    import SignUp from './SignUp.vue';
+
+
+
+    const routes = [
+        {path: '/signup', name: 'signup', component: SignUp }
+    ];
 
     export default {
 
-      name: "FormLogin",
+      name: "LoginComponent",
 
       data(){
 
         return {
-          email : "jonathanmbaya13@gmail.com",
-          password : "1234",
+          email : "",
+          password : "",
           login : "",
           loginValid: null
         }
@@ -60,8 +68,6 @@
         async onSubmit() {
           const valid = await this.v$.$validate();
           if (!valid) return "Erreur"
-          // console.log(this.email);
-          // console.log(this.password);
         },
 
         validLogin() {
@@ -87,8 +93,8 @@
     @import url(https://fonts.googleapis.com/css?family=Open+Sans);
     .btn {
       display: inline-block;
-      *display: inline;
-      *zoom: 1;
+      display: inline;
+      zoom: 1;
       padding: 4px 10px 4px;
       margin-bottom: 0;
       font-size: 13px;
@@ -125,7 +131,7 @@
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2),
         0 1px 2px rgba(0, 0, 0, 0.05);
       cursor: pointer;
-      *margin-left: 0.3em;
+      margin-left: 0.3em;
     }
     .btn:hover,
     .btn:active,
@@ -307,6 +313,12 @@
     input:focus {
       box-shadow: inset 0 -5px 45px rgba(100, 100, 100, 0.4),
         0 1px 1px rgba(255, 255, 255, 0.2);
+    }
+
+    p, p a{
+        font-size: .8rem;
+        color: #ffffff;
+
     }
 
 
