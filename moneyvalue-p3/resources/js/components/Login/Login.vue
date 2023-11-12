@@ -6,13 +6,13 @@
 
     <h1>Connexion</h1>
 
-    <form  @submit.prevent="onSubmit"  @blur="v$.touch">
+    <form  @submit.prevent="login"  @blur="v$.touch">
         <input type="text" name="email" placeholder="e-mail" v-model="email" @blur="v$.touch" required="required" />
-        <p v-if="v$.email.error">{{ v$.email.$errors[0].$message }}</p>
+
         <input type="password" name="password" placeholder="Password" v-model="password" required="required" />
-        <p v-if="v$.password.error">{{ v$.password.$errors[0].$message }}</p>
-        <button type="submit" name="login" class="btn btn-primary btn-block btn-large" >Let me in.</button>
-        <p v-if="v$.login.error">{{ v$.login.$errors[0].$message }}</p>
+
+        <button type="submit" name="login" class="btn btn-primary btn-block btn-large" >Se connecter</button>
+
     </form>
 
     <div>
@@ -30,15 +30,14 @@
 
     <script>
 
-    import { useVuelidate } from '@vuelidate/core'
-    import { required, email } from '@vuelidate/validators'
-    import SignUp from './SignUp.vue';
+    import { email } from '@vuelidate/validators'
+    import axios from 'axios';
+    import store from '../../store';
 
 
-
-    const routes = [
-        {path: '/signup', name: 'signup', component: SignUp }
-    ];
+    // const routes = [
+    //     {path: '/signup', name: 'signup', component: SignUp }
+    // ];
 
     export default {
 
@@ -48,42 +47,32 @@
 
         return {
           email : "",
-          password : "",
-          login : "",
-          loginValid: null
+          password : ""
         }
 
-      },
-
-      validations(){
-        return {
-          email : {required},
-          password : {required},
-          login : {required, email}
-        }
       },
 
       methods : {
 
-        async onSubmit() {
-          const valid = await this.v$.$validate();
-          if (!valid) return "Erreur"
-        },
+        login(){
+            axios.post('http://127.0.0.1:8000/api/login',{
+                email : this.email,
+                password: this.password
+            })
 
-        validLogin() {
-          this.loginValid = (this.login.length >=3) ? true : false ;
-          console.log(this.loginValid);
+            .then(response =>{
+                store.state.user.token = response.data.token;
+                console.log(store.state.user.token);
+                localStorage.setItem('token',store.state.user.token );
+                this.$router.push('/');
+            })
+
+            .catch(err => console.log(err));
         }
 
-      },
-
-      setup() {
-
-        return {
-          v$: useVuelidate({ $autoDirty: true })
-        }
 
       }
+
     }
 
     </script>

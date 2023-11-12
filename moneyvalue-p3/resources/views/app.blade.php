@@ -19,7 +19,7 @@
     <style>
 
         /* Reset */
-        html{
+        /* html{
             font-size: 62.5%;
         }
 
@@ -108,7 +108,7 @@
         header button{
             padding: .8rem;
             border-radius: 1rem;
-        }
+        } */
 
     </style>
 

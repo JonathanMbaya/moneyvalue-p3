@@ -20,13 +20,25 @@
 <script>
     import NavbarComponent from './components/Navbar.vue';
     import FormCurrency from './components/Form/FormCurrency.vue'
+    import axiosClient from './axios';
 
     export default {
         name : 'AppComponent',
 
         components : {
             NavbarComponent, FormCurrency
+        },
+
+        methods:{
+            getInformations(){
+                axiosClient.post('/privateInformation')
+
+                .then(res=> console.log(res))
+                .catch(err => console.log(err));
+            }
         }
+
+
     }
 </script>
 

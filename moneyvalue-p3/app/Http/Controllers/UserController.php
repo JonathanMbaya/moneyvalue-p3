@@ -2,15 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Validator;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
 
-    public function getUsers(Request $request){
-        $users = User::all();
-        return response()->json(['data' => $users]);
+    public function authenticate(Request $request): JsonResponse
+    {
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return response()->json([
+                'message' => 'Invalid credentials',
+            ], 401);
+        }
+
+        return response()->json([
+            'token' => $user->remember_token,
+        ]);
+    }
+
+    public function dashboard(): JsonResponse{
+        return response()->json([
+            'success'=>'Bienvenue'
+        ]);
     }
 
     public function add(Request $request)

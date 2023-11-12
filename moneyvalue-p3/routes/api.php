@@ -17,7 +17,16 @@ Route::delete('/devises/delete/{id}',[DevisesController::class, 'delete']);
 // Route Api utilisateurs
 
 
-Route::get('/users',[UserController::class, 'getUsers']);
+Route::post('/login',[UserController::class, 'authenticate']);
+Route::post('/privateInformations',function (){
+    return response()->json([
+        'informations' => "Hello World"
+    ]);
+});
+
+Route::get('/dashboard',[UserController::class, 'dashboard'])
+->middleware('aut:sanctum');
+
 
 
 

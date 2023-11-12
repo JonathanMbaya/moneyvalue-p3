@@ -14,7 +14,7 @@
                 <a class="nav-link" href="#">Configurer les paires</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link"><router-link to="/login" >Connexion</router-link></a>
+                <a @click="logout()" class="nav-link"><router-link to="/login" >Déconnexion</router-link></a>
             </li>
         </ul>
     </div>
@@ -38,7 +38,14 @@
 
         components:{
             Login
-        }
+        },
+
+        methods: {
+            logout(){
+                localStorage.removeItem('token');
+            }
+        },
+
     }
 </script>
 
