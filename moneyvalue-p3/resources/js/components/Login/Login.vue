@@ -4,7 +4,13 @@
 
 <div class="login">
 
-    <h1>Connexion</h1>
+
+    <h1>MoneyValue</h1>
+
+    <br>
+    <br>
+
+    <h2>Connexion</h2>
 
     <form  @submit.prevent="login"  @blur="v$.touch">
         <input type="text" name="email" placeholder="e-mail" v-model="email" @blur="v$.touch" required="required" />
@@ -29,15 +35,8 @@
 
 
     <script>
-
-    import { email } from '@vuelidate/validators'
     import axios from 'axios';
     import store from '../../store';
-
-
-    // const routes = [
-    //     {path: '/signup', name: 'signup', component: SignUp }
-    // ];
 
     export default {
 
@@ -310,5 +309,4 @@
 
     }
 
-
-    </style>
+</style>

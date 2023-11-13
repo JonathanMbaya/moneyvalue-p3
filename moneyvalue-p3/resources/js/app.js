@@ -6,15 +6,11 @@ import './bootstrap'; // Assurez-vous que le fichier bootstrap est correctement 
 import { createApp } from 'vue';
 import router from './router/index';
 
-import AppComponent from './App.vue';
-import LoginComponent from './components/Login/Login.vue';
+// import AppComponent from './App.vue';
+// import LoginComponent from './components/Login/Login.vue';
+// import SignUp from './components/Login/SignUp.vue';
 
-const app = createApp({
-  components: {
-    AppComponent,
-    LoginComponent
-  }
-});
+const app = createApp();
 
 app.use(router);
 

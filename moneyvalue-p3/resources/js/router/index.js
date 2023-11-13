@@ -3,8 +3,10 @@ import { createRouter, createWebHistory } from 'vue-router';
 import LoginComponent from '../components/Login/Login.vue';
 import AppComponent from '../App.vue';
 import SignUp from '../components/Login/SignUp.vue';
+import FormAddDevises from '../components/Form/FormAddDevises.vue';
+import FormEditDevises from '../components/Form/FormEditCurrency.vue'
+import CurrencyList from '../components/Currency/Currency.vue';
 import store from '../store';
-// import { isLogged } from '../_helpers/auth-guard';
 
 const routes = [
   {
@@ -13,10 +15,33 @@ const routes = [
     component: AppComponent,
     meta: {requiresAuth : true}
   },
+
+  {
+    path: '/devises',
+    name: 'Currency',
+    component: CurrencyList,
+    meta: {requiresAuth : true}
+  },
+
+  {
+    path: '/add/devises',
+    name: 'AddDevises',
+    component: FormAddDevises,
+    meta: {requiresAuth : true}
+  },
+
+  {
+    path: '/edit/devises/:id',
+    name: 'EditDevises',
+    component: FormEditDevises,
+    meta: {requiresAuth : true}
+  },
+
   {
     path: '/login',
     name: 'Login',
-    component: LoginComponent
+    component: LoginComponent,
+    meta : {requiresAuth: false}
 
   },
 

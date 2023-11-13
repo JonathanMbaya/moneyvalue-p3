@@ -1,8 +1,8 @@
 <template>
+
     <div class="app">
+
         <NavbarComponent/>
-
-
         <h1>MoneyValue</h1>
 
         <h2>Nous vous aidons dans la conversion de vos devises</h2>
@@ -19,14 +19,17 @@
 
 <script>
     import NavbarComponent from './components/Navbar.vue';
-    import FormCurrency from './components/Form/FormCurrency.vue'
+    import FormCurrency from './components/Form/FormCurrency.vue';
+    import FormAddDevises from './components/Form/FormAddDevises.vue';
     import axiosClient from './axios';
 
     export default {
         name : 'AppComponent',
 
         components : {
-            NavbarComponent, FormCurrency
+            NavbarComponent,
+            FormCurrency,
+            FormAddDevises
         },
 
         methods:{
@@ -44,8 +47,13 @@
 
 <style scoped>
 
+h1{
+    font-weight: 800;
+}
+
 h1,h2{
     margin-top: 5rem;
+    color: #ffffff;
 }
 
 

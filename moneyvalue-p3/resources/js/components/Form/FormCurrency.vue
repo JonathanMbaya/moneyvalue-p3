@@ -86,7 +86,7 @@
     justify-content: space-around;
     align-items: center;
     background-color: #044097;
-    padding: 10% 0 10% ;
+    padding: 10% 0 10% 0;
     margin-top: 5rem;
     border-radius: 1rem;
   }

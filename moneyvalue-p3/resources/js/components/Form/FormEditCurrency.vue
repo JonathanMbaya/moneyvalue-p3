@@ -1,72 +1,67 @@
 <template>
-    <header>
 
-        <div class="signup">
+    <NavbarComponent/>
 
-            <h1>MoneyValue</h1>
+    <div class="form-edit">
 
-            <br>
-            <br>
+        <h2>Modifier une devise</h2>
 
-            <h2>Inscription</h2>
+        <form  @submit.prevent="editDevises"  @blur="v$.touch">
+            <input type="text" name="code" placeholder="code (3 lettres)" v-model="code" @blur="v$.touch" required="required" />
 
-            <form  @submit.prevent="signup"  @blur="v$.touch">
-                <input type="text" name="name" placeholder="Votre nom" v-model="name" @blur="v$.touch" required="required" />
-                <input type="text" name="email" placeholder="e-mail" v-model="email" @blur="v$.touch" required="required" />
-                <input type="password" name="password" placeholder="Password" v-model="password" required="required" />
-                <button type="submit" name="signup" class="btn btn-primary btn-block btn-large" >S'inscrire</button>
-            </form>
+            <input type="text" name="name" placeholder="nom" v-model="name" required="required" />
 
-            <div>
-                <p>Vous avez déjà un compte ?</p>
+            <button type="submit" name="editBtn" class="btn btn-primary btn-block btn-large" >Modifer</button>
 
-                <router-link to="login">Se connecter</router-link>
-            </div>
+        </form>
 
-        </div>
-
-    </header>
+    </div>
 </template>
 
 <script>
     import axios from 'axios';
-    import store from '../../store/index';
-
+    import store from '../../store';
+    import NavbarComponent from '../Navbar.vue';
 
     export default {
 
-        name: "SignUp",
+      name: "FormEditDevises",
 
-        data(){
+      components: {
+
+        NavbarComponent
+      },
+
+      data(){
 
         return {
-            name : "",
-            email : "",
-            password : ""
+          code : "",
+          name : ""
         }
 
-        },
+      },
 
-        methods : {
+      methods : {
 
-            signup(){
-                axios.post('http://127.0.0.1:8000/api/signup',{
-                    name : this.name,
-                    email : this.email,
-                    password: this.password
-                })
+        editDevises(){
+            axios.put('http://127.0.0.1:8000/api/devises/edit/${id}',{
+                code : this.code,
+                name: this.name
+            })
+            .then(response =>{console.log(response);
 
-                .then(response =>{
-                    store.state.user.token = response.data.token;
-                    console.log(store.state.user.token);
-                    localStorage.setItem('token',store.state.user.token );
-                    this.$router.push('/login');
-                })
 
-                .catch(err => console.log(err));
-            }
-
+                if (this.code && this.name){
+                    this.$router.push('/edit/devises');
+                }else{
+                    this.$router.push('/devises');
+                }
+            })
+            .catch(err => console.log(err));
         }
+
+
+      }
 
     }
 </script>
@@ -258,7 +253,7 @@
         linear-gradient(135deg, #670d10 0%, #092756 100%);
       filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3E1D6D', endColorstr='#092756',GradientType=1 );
     }
-    .signup {
+    .form-edit {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -266,7 +261,7 @@
       width: 300px;
       height: 300px;
     }
-    .signup h1, h2 {
+    .form-edit h1, h2 {
       color: #fff;
       text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
       letter-spacing: 1px;

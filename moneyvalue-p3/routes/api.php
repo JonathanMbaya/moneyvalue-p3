@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DevisesController;
 
+
+// Route Api Cuurency
+
 Route::get('/devises',[DevisesController::class, 'index']);
 
 Route::post('/devises/add',[DevisesController::class, 'add']);
@@ -23,6 +26,8 @@ Route::post('/privateInformations',function (){
         'informations' => "Hello World"
     ]);
 });
+
+Route::post('/signup',[UserController::class, 'subscribe']);
 
 Route::get('/dashboard',[UserController::class, 'dashboard'])
 ->middleware('aut:sanctum');

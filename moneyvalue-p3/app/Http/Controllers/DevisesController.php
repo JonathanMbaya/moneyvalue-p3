@@ -41,8 +41,8 @@ class DevisesController extends Controller
             $devises->id = $request->id;
             $devises->code = $request->code;
             $devises->name = $request->name;
-            $devises->created_at = $request->created_at;
-            $devises->updated_at = $request->updated_at;
+            $devises->created_at = now();
+            $devises->updated_at = now();
 
             $devises->save();
 

@@ -8,7 +8,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Ajouter une devise</a>
+                <a class="nav-link active" aria-current="page"><router-link to="/" >MoneyValue</router-link></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page"><router-link to="/devises" >Voir les devises</router-link></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Configurer les paires</a>
