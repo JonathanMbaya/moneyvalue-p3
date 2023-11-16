@@ -10,6 +10,8 @@ use App\Http\Controllers\DevisesController;
 
 Route::get('/devises',[DevisesController::class, 'index']);
 
+Route::get('/devises/{id}',[DevisesController::class, 'oneCurrency']);
+
 Route::post('/devises/add',[DevisesController::class, 'add']);
 
 Route::put('/devises/edit/{id}',[DevisesController::class, 'edit']);

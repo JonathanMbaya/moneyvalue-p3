@@ -16,54 +16,55 @@
         </form>
 
     </div>
+
 </template>
 
 <script>
+
     import axios from 'axios';
     import store from '../../store';
     import NavbarComponent from '../Navbar.vue';
 
     export default {
 
-      name: "FormAddDevises",
+        name: "FormAddDevises",
 
-      components: {
+        components: {
 
-        NavbarComponent
-      },
+            NavbarComponent
+        },
 
-      data(){
+        data(){
 
-        return {
-          code : "",
-          name : ""
+            return {
+            code : "",
+            name : ""
+            }
+        },
+
+        methods : {
+
+            addDevises(){
+                axios.post('http://127.0.0.1:8000/api/devises/add',{
+                    code : this.code,
+                    name: this.name
+                })
+                .then(response =>{console.log(response);
+                    localStorage.setItem('token', store.state.user.token);
+
+                    if (this.code && this.name){
+                        this.$router.push('/devises');
+                    }else{
+                        this.$router.push('/');
+                    }
+                })
+                .catch(err => console.log(err));
+            }
+
         }
-
-      },
-
-      methods : {
-
-        addDevises(){
-            axios.post('http://127.0.0.1:8000/api/devises/add',{
-                code : this.code,
-                name: this.name
-            })
-            .then(response =>{console.log(response);
-                localStorage.setItem('token', store.state.user.token);
-
-                if (this.code && this.name){
-                    this.$router.push('/devises');
-                }else{
-                    this.$router.push('/');
-                }
-            })
-            .catch(err => console.log(err));
-        }
-
-
-      }
 
     }
+
 </script>
 
 <style scoped>

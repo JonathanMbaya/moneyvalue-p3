@@ -6,8 +6,8 @@
 
         <h2>Modifier une devise</h2>
 
-        <form  @submit.prevent="editDevises"  @blur="v$.touch">
-            <input type="text" name="code" placeholder="code (3 lettres)" v-model="code" @blur="v$.touch" required="required" />
+        <form  @submit.prevent="editDevises" >
+            <input type="text" name="code" placeholder="code (3 lettres)" v-model="code"  required="required" />
 
             <input type="text" name="name" placeholder="nom" v-model="name" required="required" />
 
@@ -16,52 +16,66 @@
         </form>
 
     </div>
+
+    <div> {{ id }}</div>
+
 </template>
 
 <script>
     import axios from 'axios';
-    import store from '../../store';
     import NavbarComponent from '../Navbar.vue';
 
     export default {
 
-      name: "FormEditDevises",
+        name: "FormEditDevises",
 
-      components: {
+        components: {
+            NavbarComponent
+        },
 
-        NavbarComponent
-      },
+        data(){
 
-      data(){
+            return {
+                code : "",
+                name : "",
+                id : ""
+            }
 
-        return {
-          code : "",
-          name : ""
+        },
+
+        mounted(){
+         console.log(this.$route.params.id);
+         this.id = this.$route.params.id;
+        },
+
+        updated(){
+            console.log(this.$route.params.id)
+            this.id = this.$route.params.id;
+        },
+
+
+        methods: {
+
+            editDevises(){
+
+                axios.put(`http://127.0.0.1:8000/api/devises/edit/${id}`,{
+                    code : this.code,
+                    name: this.name
+                })
+
+                .then(response =>{console.log(response);
+
+                    if (this.code && this.name){
+                        this.$router.push('/devises/edit');
+                    }else{
+                        this.$router.push('/devises');
+                    }
+                })
+
+                .catch(err => console.log(err));
+            }
+
         }
-
-      },
-
-      methods : {
-
-        editDevises(){
-            axios.put('http://127.0.0.1:8000/api/devises/edit/${id}',{
-                code : this.code,
-                name: this.name
-            })
-            .then(response =>{console.log(response);
-
-
-                if (this.code && this.name){
-                    this.$router.push('/edit/devises');
-                }else{
-                    this.$router.push('/devises');
-                }
-            })
-            .catch(err => console.log(err));
-        }
-
-
-      }
 
     }
 </script>

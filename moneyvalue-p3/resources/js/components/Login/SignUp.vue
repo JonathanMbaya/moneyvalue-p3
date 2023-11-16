@@ -11,16 +11,20 @@
             <h2>Inscription</h2>
 
             <form  @submit.prevent="signup"  @blur="v$.touch">
+
                 <input type="text" name="name" placeholder="Votre nom" v-model="name" @blur="v$.touch" required="required" />
                 <input type="text" name="email" placeholder="e-mail" v-model="email" @blur="v$.touch" required="required" />
                 <input type="password" name="password" placeholder="Password" v-model="password" required="required" />
                 <button type="submit" name="signup" class="btn btn-primary btn-block btn-large" >S'inscrire</button>
+
             </form>
 
             <div>
-                <p>Vous avez déjà un compte ?</p>
-
-                <router-link to="login">Se connecter</router-link>
+                <p>Vous avez déjà un compte ?
+                    <router-link to="login">
+                        Se connecter
+                    </router-link>
+                </p>
             </div>
 
         </div>

@@ -19,6 +19,22 @@ class DevisesController extends Controller
         return response()->json(['data' => $allDevise]);
     }
 
+    public function oneCurrency(Request $request, $id){
+        $devises = Devises::find($id);
+
+        if (!$devises) {
+            return response()->json([
+                'status' => 404,
+                'message' => 'Devise not found!'
+            ], 404);
+        }else{
+            return response()->json([
+                'data'=>$devises
+            ]);
+        }
+
+    }
+
     /**
      * Store a newly created resource in storage.
      */

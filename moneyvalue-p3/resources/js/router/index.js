@@ -13,35 +13,31 @@ const routes = [
     path: '/',
     name: 'App',
     component: AppComponent,
-    meta: {requiresAuth : true}
   },
 
   {
     path: '/devises',
     name: 'Currency',
     component: CurrencyList,
-    meta: {requiresAuth : true}
   },
 
   {
-    path: '/add/devises',
+    path: '/devises/add',
     name: 'AddDevises',
     component: FormAddDevises,
-    meta: {requiresAuth : true}
   },
 
   {
-    path: '/edit/devises/:id',
+    path: '/devises/edit/:id(\\d+)',
     name: 'EditDevises',
     component: FormEditDevises,
-    meta: {requiresAuth : true}
+    props: true
   },
 
   {
     path: '/login',
     name: 'Login',
     component: LoginComponent,
-    meta : {requiresAuth: false}
 
   },
 
@@ -52,19 +48,21 @@ const routes = [
   }
 ];
 
+
+// router.beforeEach((to, from, next) => {
+//     if (from.meta.requiresAuth && to.meta.requiresAuth && !store.state.user.token){
+//         next({name: 'Login'});
+//     }
+
+//     else{
+//         next();
+//     }
+// })
+
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
 });
-
-router.beforeEach((to, from, next) => {
-    if (to.meta.requiresAuth && !store.state.user.token){
-        next({name: 'Login'});
-    }
-
-    else{
-        next();
-    }
-})
 
 export default router;
