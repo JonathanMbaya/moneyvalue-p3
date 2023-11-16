@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PaireController;
 use App\Http\Controllers\DevisesController;
 
 
@@ -19,8 +20,20 @@ Route::put('/devises/edit/{id}',[DevisesController::class, 'edit']);
 Route::delete('/devises/delete/{id}',[DevisesController::class, 'delete']);
 
 
-// Route Api utilisateurs
+// Route Api Paires
 
+Route::get('/paire',[PaireController::class, 'index']);
+
+Route::get('/paire/{id}',[PaireController::class, 'onePaire']);
+
+Route::post('/paire/add',[PaireController::class, 'add']);
+
+Route::put('/paire/edit/{id}',[PaireController::class, 'edit']);
+
+Route::delete('/paire/delete/{id}',[PaireController::class, 'delete']);
+
+
+// Route Api utilisateurs
 
 Route::post('/login',[UserController::class, 'authenticate']);
 Route::post('/privateInformations',function (){

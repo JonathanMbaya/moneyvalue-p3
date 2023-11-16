@@ -6,9 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreatePairesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+
     public function up(): void
     {
         Schema::disableForeignKeyConstraints();
@@ -18,7 +16,7 @@ class CreatePairesTable extends Migration
             $table->bigInteger('source_currency');
             $table->bigInteger('target_currency');
             $table->decimal('rate');
-            $table->integer('number_of_requests'); // Correction de 'int' à 'integer'
+            $table->integer('number_of_requests');
             $table->timestamps();
 
 
@@ -27,9 +25,6 @@ class CreatePairesTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('paires');
