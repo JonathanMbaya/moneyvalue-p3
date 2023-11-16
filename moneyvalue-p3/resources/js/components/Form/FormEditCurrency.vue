@@ -1,84 +1,86 @@
 <template>
+    <div>
+      <NavbarComponent />
 
-    <NavbarComponent/>
-
-    <div class="form-edit">
-
+      <div class="form-edit">
         <h2>Modifier une devise</h2>
 
-        <form  @submit.prevent="editDevises" >
-            <input type="text" name="code" placeholder="code (3 lettres)" v-model="code"  required="required" />
+        <form @submit.prevent="editDevises">
+          <input
+            type="text"
+            name="code"
+            placeholder="code (3 lettres)"
+            v-model="currency.code"
+            required="required"
+          />
 
-            <input type="text" name="name" placeholder="nom" v-model="name" required="required" />
+          <input
+            type="text"
+            name="name"
+            placeholder="name"
+            v-model="currency.name"
+            required="required"
+          />
 
-            <button type="submit" name="editBtn" class="btn btn-primary btn-block btn-large" >Modifer</button>
-
+          <button
+            type="submit"
+            name="editBtn"
+            class="btn btn-primary btn-block btn-large"
+          >
+            Modifier
+          </button>
         </form>
-
+      </div>
     </div>
+  </template>
 
-    <div> {{ id }}</div>
+  <script>
+  import axios from "axios";
+  import NavbarComponent from "../Navbar.vue";
 
-</template>
+  export default {
+    name: "FormEditDevises",
+    props: ["id"],
+    components: {
+      NavbarComponent,
+    },
+    data() {
+      return {
+        currency: {},
+      };
+    },
+    mounted() {
+      this.getUser(this.id);
+    },
+    methods: {
+      getUser(id) {
+        axios
+          .get(`http://127.0.0.1:8000/api/devises/${id}`)
+          .then((response) => {
+            this.currency = response.data.data;
+          })
+          .catch((err) => console.log(err));
+      },
+      editDevises() {
+        axios
+          .put(`http://127.0.0.1:8000/api/devises/edit/${this.id}`, {
+            code: this.currency.code,
+            name: this.currency.name,
+          })
+          .then((response) => {
+            console.log(response);
 
-<script>
-    import axios from 'axios';
-    import NavbarComponent from '../Navbar.vue';
-
-    export default {
-
-        name: "FormEditDevises",
-
-        components: {
-            NavbarComponent
-        },
-
-        data(){
-
-            return {
-                code : "",
-                name : "",
-                id : ""
+            if (!this.currency.code && !this.currency.name) {
+              this.$router.push(`/devises/edit/${id}`);
+            } else {
+              this.$router.push("/devises");
             }
-
-        },
-
-        mounted(){
-         console.log(this.$route.params.id);
-         this.id = this.$route.params.id;
-        },
-
-        updated(){
-            console.log(this.$route.params.id)
-            this.id = this.$route.params.id;
-        },
-
-
-        methods: {
-
-            editDevises(){
-
-                axios.put(`http://127.0.0.1:8000/api/devises/edit/${id}`,{
-                    code : this.code,
-                    name: this.name
-                })
-
-                .then(response =>{console.log(response);
-
-                    if (this.code && this.name){
-                        this.$router.push('/devises/edit');
-                    }else{
-                        this.$router.push('/devises');
-                    }
-                })
-
-                .catch(err => console.log(err));
-            }
-
-        }
-
-    }
-</script>
+          })
+          .catch((err) => console.log(err));
+      },
+    },
+  };
+  </script>
 
 <style scoped>
 
